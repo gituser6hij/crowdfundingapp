@@ -4,6 +4,7 @@ import { useAddress, useContract, useMetamask, useContractWrite } from '@thirdwe
 import { ethers } from 'ethers';
 import { ThirdwebSDK } from '@thirdweb-dev/sdk/evm';
 
+
 const sdk = new ThirdwebSDK("goerli");
 const StateContext = createContext();
 
@@ -36,18 +37,18 @@ export const StateContextProvider = ({ children }) => {
   const getCampaigns = async () => {
     const campaigns = await contract.call('getCampaigns');
 
-    const parsedCampaings = campaigns.map((campaign, i) => ({
+    const parsedCampaigns = campaigns.map((campaign, i) => ({
       owner: campaign.owner,
       title: campaign.title,
       description: campaign.description,
       target: ethers.utils.formatEther(campaign.target.toString()),
       deadline: campaign.deadline.toNumber(),
       amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
-      image: campaign.image,
+      image: campaign.images,
       pId: i
     }));
 
-    return parsedCampaings;
+    return parsedCampaigns;
   }
 
   const getUserCampaigns = async () => {
